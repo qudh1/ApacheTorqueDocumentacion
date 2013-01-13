@@ -8,7 +8,36 @@
 
 %Resaltado de sintaxis
 \usepackage{color}
+\usepackage{color}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
 \usepackage{listings}
+\lstset {
+	frame				=	Ltb,
+    framerule			=	0pt,
+    aboveskip			=	0.5cm,
+    framextopmargin		=	3pt,
+    framexbottommargin	=	3pt,
+    framexleftmargin	=	0.4cm,
+    framesep			=	0pt,
+    rulesep				=	.4pt,
+    backgroundcolor		=	\color{gray97},
+    rulesepcolor		=	\color{black},
+    %
+    stringstyle			=	\ttfamily,
+    showstringspaces	=	false,
+    basicstyle			=	\small,
+    commentstyle		=	\color{gray45},
+    keywordstyle		=	\bfseries,
+    %
+    numbers				=	left,
+    numbersep			=	15pt,
+    numberstyle			=	\tiny,
+    numberfirstline		=	false,
+    breaklines			=	true,
+}
 
 \title{Apache Torque}
 \author{Francisco J. Serrano}
@@ -24,11 +53,12 @@
 Apache Software Foundation (ASF) es una organización no lucrativa (en concreto, una fundación) creada para dar soporte a los proyectos de software bajo la denominación Apache, incluyendo el popular servidor HTTP Apache. La ASF se formó a partir del llamado Grupo Apache y fue registrada en Delaware (Estados Unidos), en junio de 1999.
 Apache Software Foundation es una comunidad descentralizada de desarrolladores que trabajan cada uno en sus propios proyectos de código abierto. Los proyectos Apache se caracterizan por un modelo de desarrollo basado en el consenso y la colaboración y en una licencia de software abierta y pragmática.
 
-\begin{listings}
-	for(int i = 0; i >20; i++) {
-		echo hola!;
-	}
-\end{listings}
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+int main(int argc, char* argv[]) {
+  puts("Hola mundo!");
+}
+\end{lstlisting}
 
 \subsection{Apache Torque}
 Apache Torque es un mapeador objeto relacional para Java. En otras palabras, Torque te permite acceder y manipular información en una base de datos relacional usando objetos. 
