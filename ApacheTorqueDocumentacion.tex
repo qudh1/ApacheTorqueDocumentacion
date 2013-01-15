@@ -8,10 +8,14 @@
 
 %Resaltado de sintaxis
 \usepackage{color}
-\usepackage{color}
 \definecolor{gray97}{gray}{.97}
 \definecolor{gray75}{gray}{.75}
 \definecolor{gray45}{gray}{.45}
+
+\definecolor{red}{rgb}{0.6,0,0} % strings
+\definecolor{green}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{purple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{blue}{rgb}{0.25,0.35,0.75} % doc
 
 \usepackage{listings}
 \lstset {
@@ -26,11 +30,12 @@
     backgroundcolor		=	\color{gray97},
     rulesepcolor		=	\color{black},
     %
-    stringstyle			=	\ttfamily,
+    stringstyle			=	\color{red},
     showstringspaces	=	false,
-    basicstyle			=	\small,
-    commentstyle		=	\color{gray45},
-    keywordstyle		=	\bfseries,
+    basicstyle			=	\ttfamily\small,
+    commentstyle		=	\color{green},
+    morecomment         =   [s][\color{blue}]{/**}{*/},
+    keywordstyle		=	\color{purple}\bfseries,
     %
     numbers				=	left,
     numbersep			=	15pt,
@@ -54,9 +59,10 @@ Apache Software Foundation (ASF) es una organización no lucrativa (en concreto,
 Apache Software Foundation es una comunidad descentralizada de desarrolladores que trabajan cada uno en sus propios proyectos de código abierto. Los proyectos Apache se caracterizan por un modelo de desarrollo basado en el consenso y la colaboración y en una licencia de software abierta y pragmática.
 
 \begin{lstlisting}[language=C]
+/* Includes */
 #include <stdio.h>
 int main(int argc, char* argv[]) {
-  puts("Hola mundo!");
+  puts("Hola mundo!"); // Text console
 }
 \end{lstlisting}
 
