@@ -1,6 +1,5 @@
 \documentclass[12pt, oneside]{article}
 
-
 %Codificación e idioma
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
@@ -19,6 +18,7 @@
 
 \usepackage{listings}
 \lstset {
+	language			=	C,
 	frame				=	Ltb,
     framerule			=	0pt,
     aboveskip			=	0.5cm,
@@ -34,8 +34,9 @@
     showstringspaces	=	false,
     basicstyle			=	\ttfamily\small,
     commentstyle		=	\color{green},
-    morecomment         =   [s][\color{blue}]{/**}{*/},
+    morecomment         =   [s][\color{blue}]{/*}{*/},
     keywordstyle		=	\color{purple}\bfseries,
+    tabsize					=	3,
     %
     numbers				=	left,
     numbersep			=	15pt,
@@ -58,7 +59,7 @@
 Apache Software Foundation (ASF) es una organización no lucrativa (en concreto, una fundación) creada para dar soporte a los proyectos de software bajo la denominación Apache, incluyendo el popular servidor HTTP Apache. La ASF se formó a partir del llamado Grupo Apache y fue registrada en Delaware (Estados Unidos), en junio de 1999.
 Apache Software Foundation es una comunidad descentralizada de desarrolladores que trabajan cada uno en sus propios proyectos de código abierto. Los proyectos Apache se caracterizan por un modelo de desarrollo basado en el consenso y la colaboración y en una licencia de software abierta y pragmática.
 
-\begin{lstlisting}[language=C]
+\begin{lstlisting}
 /* Includes */
 #include <stdio.h>
 int main(int argc, char* argv[]) {
@@ -101,6 +102,17 @@ PostgreSQL utiliza un modelo cliente/servidor y usa multiprocesos en vez de mult
 \subsection{MySQL}
 
 \subsection{SQL Server}
+
+\section{Instalando Apache Torque}
+\subsection{Configuración}
+\subsection{Compilando el nuestro primer proyecto}
+\subsection{Configuración XML}
+
+\section{Uso de Apache Torque}
+
+\section{Aplicacion}
+\subsection{Esquema base datos}
+\input{code/notas-schema}
 
 %\include{}
 

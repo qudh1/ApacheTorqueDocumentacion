@@ -1,0 +1,45 @@
+\begin{lstlisting}[language=xml]
+<!DOCTYPE database SYSTEM
+ "http://db.apache.org/torque/dtd/database_3_3.dtd">
+
+<database name="notas">
+  <table name="usuario" description="Tabla de usuarios">
+    <column
+      name="usuario_id"
+      required="true"
+      primaryKey="true"
+      type="INTEGER"
+      description="Identificador de usuario"/>
+    <column
+      name="nick"
+      required="true"
+      type="VARCHAR"
+      size="128"
+      description="nick del usuario"/>
+  </table>
+  <table name="nota" description="Tabla de notas">
+    <column
+      name="nota_id"
+      required="true"
+      primaryKey="true"
+      type="INTEGER"
+      description="Identificador de nota"/>
+    <column
+      name="texto"
+      required="true"
+      type="VARCHAR"
+      size="150"
+      description="texto de la nota"/>
+	<column
+      name="usuario_id"
+      required="true"
+      type="INTEGER"
+      description="Clave foranea de usuario"/>
+	<foreign-key foreignTable="usuario">
+      <reference
+        local="usuario_id"
+        foreign="usuario_id"/>
+    </foreign-key>
+  </table>
+</database>
+\end{lstlisting}
