@@ -27,7 +27,6 @@
 
 \usepackage{listings}
 \lstset {
-	language			=	C,
 	frame				=	Ltb,
     framerule			=	0pt,
     aboveskip			=	0.5cm,
@@ -138,7 +137,7 @@ En aplicaciones web hay baja concurrencia en la modificación de datos y en camb
 
 \subsection{SQL Server}
 
-\section{Instalando Apache Torque}
+\section{Instalando y configurando Apache Torque con Postgresql}
 En primer lugar descargar todo el software necesario:
 
 \begin{description}
@@ -366,10 +365,14 @@ Puede haber 0 o más elementos de este tipo por tabla.
 
 \begin{lstlisting}
 <foreign-key foreignTable="MY_TABLE"
-         		 name="MY_TABLE_FK"
-          		onUpdate="none"
-         		 onDelete="none">
-         		 <!-- reference info -->
+	name="MY_TABLE_FK"
+	onUpdate="none"
+	onDelete="none">
+	
+	<!-- reference info -->
+	<reference
+	local="[columna_local]"
+	foreign="[columna_foreign]"/>
 </foreign-key>
 \end{lstlisting}
 
@@ -383,8 +386,8 @@ Elemento: index
 Puede haber 0 o más elementos de este tipo por tabla.
 
 \begin{lstlisting}
-	<index name="MY_INDEX">
-         		 <!-- index-column info -->
+<index name="MY_INDEX">
+	<!-- index-column info -->
 </index>
 \end{lstlisting}
 
@@ -400,8 +403,13 @@ Elemento: index-column
 
 Tiene solo un atributo: “name” que indica el nombre del índice de la columna. Este elemento no puede contener otros elementos.
 
+\section{Instalando y cofigurando Apache Torque con MySQL}
+\subsection{Configuración y ejecución de Generator}
+\subsection{Configuración del proyecto desde eclipse}
 
-\section{Uso de Apache Torque}
+\section{Instalando y cofigurando Apache Torque con Microsoft SQL Server}
+\subsection{Configuración y ejecución de Generator}
+\subsection{Configuración del proyecto desde eclipse}
 
 \section{Aplicacion}
 \subsection{Esquema base datos}
