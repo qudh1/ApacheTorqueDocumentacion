@@ -188,12 +188,218 @@ Editamos el archivo “build.propierties” añadiendo la configuración de nues
 \subsubsection{build.propierties}
 \input{code/build.propierties}
 
-\subsection{Configuración}
+Ahora creamos un archivo XML llamado "coches-schema.xml", en el directorio "schema", donde describiremos la estructura de la base de datos de nuestro sistema. (En este ejemplo solo se usará una tabla, más adelante se explicará las diferentes configuraciones de este fichero)
+
+subsubsection{coches-schema.xml}
+\input{code/coches-schema}
+
+Desde cmd.exe accedemos al directorio “torque-gen-3.3” y ejecutamos las siguientes instrucciones: 
+Esta instrucción genera los archivos .java y .sql en la carpeta que hemos indicado antes en nuestro archivo “build.propierties”, en nuestro caso en “src”: ant -f build-torque.xml 
+La siguiente crea y configura la base de datos:  ant -f build-torque.xml create-db.
+Por último esta instrucción crea las tablas en la base de datos, ejecutando el .sql creado con anterioridad: ant -f build-torque.xml insert-sql
+
+Ya tenemos en la carpeta “src” 2 subcarpetas, una llamada “java” donde se encuentran los fuentes de nuestro proyecto y otra llamada “sql”, donde se encuentran los scripts de generación de la base de datos. Movemos la carpeta sql a la raíz del proyecto, ya que no la necesitaremos. Finalmente movemos el contenido del directorio “java” al directorio “src” y eliminamos el directorio “java”. Ya tenemos el proyecto preparado, para seguir trabajando desde Eclipse.
+
+\subsection{Configuración del proyecto desde Eclipse}
+Como podemos observar existen numerosos errores en nuestro proyecto, ello es debido a la falta de las librerías de Torque y Village. Las añadimos desde las siguientes direcciones:
+
+\begin{lstlisting}
+coches\torque-3.3\lib
+\end{lstlisting}
+
+	\begin{center}
+		\includegraphics[height=8cm]{img/torque-lib.png}
+	\end{center}
+	
+\begin{lstlisting}
+coches\torque-3.3\
+\end{lstlisting}
+
+	\begin{center}
+		\includegraphics{img/torque-file.png}
+	\end{center}
+	
+	Ahora ya no existen errores en el proyecto y podemos realizar una pequeña prueba de ejecución, para ello podemos crear un paquete, donde crearemos una clase Main e introduciremos el siguiente código:
+	
+	\input{code/java-test}
+	
+	Desde nuestro main debemos de inicializar Torque, para ello hemos insertado la línea de código: Torque.init("Torque.properties"). Toque.init toma como parámetro un fichero llamado Torque.properties, situado en la carpeta “torque-3.3”. Movemos ese archivo a la raíz del proyecto (para que sea accesible directamente), y procedemos a configurarlo. En amarillo se encuentran las líneas que han sido modificadas con respecto al archivo de configuración por defecto.
+	
+	\input{code/torque.properties}
+	
+	Como último paso añadimos el driver de la base de datos a nuestro proyecto en Eclipse, situado en:
+	
+\begin{lstlisting}
+coches\torque-gen-3.3\lib
+\end{lstlisting}
+
+	\begin{center}
+		\includegraphics{img/postgresql-file.png}
+	\end{center}
+
+	Ya finalmente podemos ejecutar el proyecto, la salida por pantalla sería la siguiente: 
+	
+	\begin{lstlisting}
+	coche_id: 3
+	nombre:  mondeo
+
+	coche_id: 4
+	nombre:  jumpy
+	\end{lstlisting}
+
 \subsection{Compilando nuestro primer proyecto}
 \subsection{Configuración XML}
 	\begin{center}
 		\includegraphics[height=8cm]{img/xml-config.png}
 	\end{center}
+	
+	El esquema de base de datos de torque describe los elementos y atributos de la propia base de datos que estemos utillizando. A continuación se describe los principales elementos y las bases de datos compatibles actualmente.
+
+Elemento: database
+
+Puede contener los siguientes 8 atributos:
+
+name: el nombre de la base de datos.
+defaultIdMethod: este se aplica a aquellas tablas que no tienen un atributo id definido. Por defecto es “none”. Normalmente se utiliza si no quieres ID’s generados.
+defaultJavaType: tipo predeterminado de las columnas de la base de datos ( “object” o “primitive”, por defecto es primitive).
+package: paquete base donde se generará los modelos de objetos asociados con la base de datos. Este reemplaza la propiedad “targetPackage” del archivo build.properties de Torque.
+baseClass: la clase base que se utilizará al generar el modelo de objetos.
+basePeer: la clase peer a utilizar al generar los pares del modelo de objetos.
+defaultJavaNamingMethod: este atributo determina como se convierten los nombres de las tablas y columnas en una clase Java o el nombre del método. Puede tener 3 valores diferentes:
+nochange: no se realizan cambios.
+underscore: se elimina el subrayado, la primera letra y después de un guión se pone la letra en mayúscula, el resto de caracteres en minúscula.
+javaname: con guiones bajos, pero las letras no se convierten en minúscula.
+heavyIndexing: agrega indices adicionales para columnas con varias claves primarias.
+
+También puede contener los siguientes elementos:
+
+Elemento: external-schema
+Incluye otro archivo de esquema. Puede haber 0 o más elementos de este tipo.
+
+<Externa del esquema
+           		filename = "extext-schema.xml" />
+
+
+Elemento: domain
+Se utiliza para definir los atributos de las columnas.Puede haber 0 o más elementos de este tipo. 
+
+<domain
+           name="amount"
+           type="NUMERIC"
+           size="10"
+           scale="2"
+           default="0"
+           description="amount domain" />
+
+      
+Elemento: table
+Define las tablas y sus atributos:
+
+\begin{lstlisting}[language=XML]
+<table
+	name="MY_TABLE"
+	javaName="table"
+	idMethod="idbroker"
+	skipSql="false"
+	baseClass="com.myapp.om.table.BaseClass"
+	basePeer="com.myapp.om.table.BasePeer"
+	javaNamingMethod="underscore"
+	description="Table for Torque tests">
+
+	<!-- column information here -->
+
+</table>
+\end{lstlisting}
+
+El elemento table tiene los siguientes atributos asociados.
+
+name: el nombre de la tabla que está siendo referenciada.
+javaName: como se llamará esta tabla en Java.
+idMethod: como s e crearán las claves primarias. Por defecto es nulo.
+skipSql: valor booleano (true o false) que indica si hacer o no la generación de SQL para esta referencia.
+abstract: valor booleano para generar la clase como abstracta o no.
+baseClass: usado para la generación de OM Peer
+basePeer: usado para la generación de OM Peer.
+alias: define un alias para la tabla.
+interface: especifica una interfaz que debería ser referenciada en la sección “implements” de la clase generada.
+javaNamingMethod: especifica el nombre de la clase Java del correspondiente objeto OM. Este atributo reemplaza al atributo “defaultJavaNamingMehtod” del elemento de la base de datos (database).
+description: se utiliza para la generación de documentación.
+
+El elemento “table” también puede contener los siguientes elementos:
+
+Elemento: column
+Puede haber 1 o más elementos de este tipo por tabla.
+
+\begin{lstlisting}
+<column
+           		name="MY_COLUMN"
+           		javaName="Column"
+           		primaryKey="true"
+           		required="true"
+           		size="4"
+           		type="VARCHAR"
+           		javaNamingMethod="underscore">
+
+           		<!-- inheritance info if necessary -->
+</column>
+\end{lstlisting}
+
+Contiene los siguientes atributos:
+name: nombre de la columna que está siendo referenciada.
+javaName: como se llamará esta columna en Java.
+primaryKey: valor booleano que indica si es la clave primaria o no. (true o false)
+required: indica si el valor es requerido.(true o false, por defecto es false)
+type: de que tipo es la columna.
+javaType: el tipo de la columna en Java.
+size: cuantos carácteres o digitos van a ser almacenados.
+default: valor por defecto si al insertar está vacio.
+autoIncrement: si este campo tiene autoincremento no. (true o false, por defecto es false)
+inheritance. Indica si tiene herencia. Puede tomar los valores “single” o “false”.
+
+javaNamingMethod: especifica el nombre que será utilizado en la clase Java del correspondiente objeto OM. Este atributo reemplaza al atributo “defaultJavaNamingMehtod” del elemento de la base de datos (database).
+
+description: se utiliza para la generación de documentación.
+
+
+Elemento: foreing-key
+Puede haber 0 o más elementos de este tipo por tabla.
+
+\begin{lstlisting}
+<foreign-key foreignTable="MY_TABLE"
+         		 name="MY_TABLE_FK"
+          		onUpdate="none"
+         		 onDelete="none">
+         		 <!-- reference info -->
+</foreign-key>
+\end{lstlisting}
+
+Este elemento tiene 4 atributos:
+foreignTable: el nombre de la tabla donde se encuentra la clave foránea.
+name: el nombre de la clave foránea.
+onUpdate: acción a realizar cuando se actualiza el valor en foreignTable.
+onDelete: acción a realizar cuando se elimina el valor en foreingTable.
+
+Elemento: index
+Puede haber 0 o más elementos de este tipo por tabla.
+
+\begin{lstlisting}
+	<index name="MY_INDEX">
+         		 <!-- index-column info -->
+</index>
+\end{lstlisting}
+
+El elemento index tiene 1 atributo asociado:
+name: el nombre del índice. 
+Puede contener 1 o más elementos  del tipo:
+	
+Elemento: index-column
+
+\begin{lstlisting}
+<index-column name="INDEX_COLUMN"/>
+\end{lstlisting}
+
+Tiene solo un atributo: “name” que indica el nombre del índice de la columna. Este elemento no puede contener otros elementos.
+
 
 \section{Uso de Apache Torque}
 

@@ -1,0 +1,20 @@
+\begin{lstlisting}[language=xml]
+<!DOCTYPE database SYSTEM "http://db.apache.org/torque/dtd/database_3_3.dtd">
+
+<database name="coches">
+	<table name="coche" description="Tabla de coches">
+	<column
+		name="coche_id"
+		required="true"
+		primaryKey="true"
+		type="INTEGER"
+		description="Identificador de coches"/>
+	<column
+		name="nombre"
+		required="true"
+		type="VARCHAR"
+		size="128"
+		description="Nombre del coche"/>
+	</table>
+</database>
+\end{lstlisting}

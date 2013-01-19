@@ -1,0 +1,64 @@
+\begin{lstlisting}
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.torque.Torque;
+import org.apache.torque.TorqueException;
+import org.apache.torque.util.Criteria;
+
+import torque.generated.Coche;
+import torque.generated.CochePeer;
+
+public class Main 
+{
+	public static void main(String[] args)
+	{
+		/*Aqui inicializamos Torque*/
+		try
+		{
+			Torque.init("Torque.properties");
+		} 
+		catch (TorqueException e) 
+		{	
+			e.printStackTrace();
+		}
+		/*Aqui probamos la conexion con la base de datos*/
+		try 
+		{
+			Coche c = new Coche();
+			c.setCocheId(3);
+			c.setNombre("mondeo");
+			c.save();
+
+			Coche c1 = new Coche();
+			c1.setCocheId(4);
+			c1.setNombre("jumpy");
+			c1.save();
+
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+
+		/*Aqui recuperamos los datos y los mostramos por pantalla*/
+		try 
+		{
+			Criteria crit = new Criteria();
+
+			List<Coche> coches = CochePeer.doSelect(crit);
+			for (Iterator<Coche> i = coches.iterator(); i.hasNext();)
+			{
+				Coche c = (Coche) i.next();
+				System.out.println("coche_id: " + c.getCocheId());
+				System.out.println("nombre:  " + c.getNombre()); 
+				System.out.println();
+			}
+		} 
+		catch (TorqueException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+}
+\end{lstlisting}
