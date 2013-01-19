@@ -1,0 +1,43 @@
+\documentclass[24pt, a4paper, oneside, spanish]{beamer}
+\usetheme{Warsaw}
+
+%Codificación e idioma
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\title{Titulo}
+\author{Autor}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Introducción}
+
+\begin{frame}
+	\frametitle{Nombre transparencia}
+	\setbeamercovered{invisible}
+	
+	\begin{block}{Nombre bloque}
+		\pause
+		
+		\begin{itemize}
+		\item Loquesea
+		\pause
+		\item Otro Loquesea
+		\pause
+		\item Loquesea final
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{El problema}
+	\setbeamercovered{invisible}
+	Y ahora, sin \pause bloque!
+\end{frame}
+
+\end{document}
