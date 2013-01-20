@@ -1,0 +1,34 @@
+Define las tablas y sus atributos:
+
+\begin{lstlisting}[language=XML]
+<table
+	name="MY_TABLE"
+	javaName="table"
+	idMethod="idbroker"
+	skipSql="false"
+	baseClass="com.myapp.om.table.BaseClass"
+	basePeer="com.myapp.om.table.BasePeer"
+	javaNamingMethod="underscore"
+	description="Table for Torque tests">
+
+	<!-- column information here -->
+</table>
+\end{lstlisting}
+
+El elemento table tiene los siguientes atributos asociados.
+
+\begin{description}
+	\item[name] el nombre de la tabla que está siendo referenciada.
+	\item[javaName] como se llamará esta tabla en Java.
+	\item[idMethod] como s e crearán las claves primarias. Por defecto es nulo.
+	\item[skipSql] valor booleano (true o false) que indica si hacer o no la generación de SQL para esta referencia.
+	\item[abstract] valor booleano para generar la clase como abstracta o no.
+	\item[baseClass] usado para la generación de OM Peer
+	\item[basePeer] usado para la generación de OM Peer.
+	\item[alias] define un alias para la tabla.
+	\item[interface] especifica una interfaz que debería ser referenciada en la sección “implements” de la clase generada.
+	\item[javaNamingMethod] especifica el nombre de la clase Java del correspondiente objeto OM. Este atributo reemplaza al atributo “defaultJavaNamingMehtod” del elemento de la base de datos (database).
+	\item[description] se utiliza para la generación de documentación.
+\end{description}
+
+El elemento “table” también puede contener los siguientes elementos:

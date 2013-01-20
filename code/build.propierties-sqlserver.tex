@@ -1,5 +1,5 @@
 \begin{lstlisting}
-# -------------------------------------------------------------------
+# ###########
 # This is the name of your Torque project. Your non-Java generated
 # files will be named using the project name selected below. If your
 # project=killerapp then you will have a generated:
@@ -9,36 +9,36 @@
 # The custom is then to also rename your project XML schema from
 # project-schema.xml to killerapp-schema.xml. This is required
 # for a few targets such as datasql, datadump, and datadtd.
-# -------------------------------------------------------------------
+# ###########
 # Nombre de nuestro proyecto
 torque.project = coches
 
 
-# -------------------------------------------------------------------
+# ###########
 #
 #  T A R G E T  D A T A B A S E
 #
-# -------------------------------------------------------------------
+# ###########
 # This is the target database, only considered when generating
 # the SQL for your Torque project. Your possible choices are:
 #
 #   axion, cloudscape, db2, db2400, hypersonic, interbase, msaccess
 #   mssql, mysql, oracle, postgresql, sapdb, sybase
-# -------------------------------------------------------------------
+# ###########
 
 # Gestor de bases de datos que vamos a usar
 torque.database = mssql
 torque.database.type = mssql
 
 
-# -------------------------------------------------------------------
+# ###########
 #
 #  O B J E C T  M O D E L  I N F O R M A T I O N
 #
-# -------------------------------------------------------------------
+# ###########
 # These settings will allow you to customize the way your
 # Peer-based object model is created.
-# -------------------------------------------------------------------
+# ###########
 # addGetByNameMethod
 #   If true, Torque adds methods to get database fields by name/position.
 #
@@ -96,7 +96,7 @@ torque.database.type = mssql
 #
 # enableJava5Features
 #   If true, the generator will use Java5 generics in the generated code.
-# -------------------------------------------------------------------
+# ###########
 # Paquete donde generara el codigo
 torque.targetPackage = torque.generated
 
@@ -115,11 +115,11 @@ torque.generateBeans = false
 torque.beanSuffix = Bean
 torque.enableJava5Features = false
 
-# -------------------------------------------------------------------
+# ###########
 #
 #  D A T A B A S E  S E T T I N G S
 #
-# -------------------------------------------------------------------
+# ###########
 # JDBC connection settings. This is used by the JDBCToXML task that
 # will create an XML database schema from JDBC metadata. These
 # settings are also used by the SQL Ant task to initialize your
@@ -128,7 +128,7 @@ torque.enableJava5Features = false
 # sameJavaName
 #   If true, the JDBC task will set the javaName attribute for the tables
 #   and columns to be the same as SQL name.
-# -------------------------------------------------------------------
+# ###########
 
 # Direcciones de acceso a la base de datos y puerto de escucha
 torque.database.createUrl=jdbc:jtds:sqlserver://127.0.0.1:1433/template1/coches

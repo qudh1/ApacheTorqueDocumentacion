@@ -2,14 +2,14 @@
 # Directorio del proyecto
 torque.applicationRoot = .
 
-# -------------------------------------------------------------------
+# ###########
 #
 #  L O G G I N G
 #
-# -------------------------------------------------------------------
+# ###########
 # We use Log4J for all Torque logging and we embed the log4j
 # properties within our application configuration.
-# -------------------------------------------------------------------
+# ###########
 
 # This first category is required and the category
 # must be named 'default'. This is used for all logging
@@ -23,11 +23,11 @@ log4j.appender.org.apache.torque.layout = org.apache.log4j.PatternLayout
 log4j.appender.org.apache.torque.layout.conversionPattern = %d [%t] %-5p %c - %m%n
 log4j.appender.org.apache.torque.append = false
 
-# -------------------------------------------------------------------
+# ###########
 #
 #  D E F A U L T S
 #
-# -------------------------------------------------------------------
+# ###########
 #
 # These values kick in, if you don't explicitly override them in your
 # various database settings. At the moment they're only used if you
@@ -36,7 +36,7 @@ log4j.appender.org.apache.torque.append = false
 #
 # The example is shown for SharedPoolDataSource.
 #
-# -------------------------------------------------------------------
+# ###########
 
 # Time to wait for a connection to the database in milliseconds.
 torque.defaults.pool.maxWait = 10000
@@ -78,17 +78,17 @@ torque.defaults.connection.url = jdbc:jtds:sqlserver://127.0.0.1:1433/coches
 torque.defaults.connection.user = user1
 torque.defaults.connection.password = user1
 
-# -------------------------------------------------------------------
+# ###########
 #
 #  T O R Q U E  P R O P E R T I E S
 #
-# -------------------------------------------------------------------
+# ###########
 # These are your database settings. Look in the
 # org.apache.torque.pool.* packages for more information.
 #
 # The parameters to connect to the default database.  You MUST
 # configure these properly.
-# -------------------------------------------------------------------
+# ###########
 
 # Nombre de la base de datos
 torque.database.default=coches
