@@ -245,17 +245,62 @@ coches\torque-gen-3.3\lib
 	coche_id: 4
 	nombre:  jumpy
 	\end{lstlisting}
+	
+\section{Instalando y cofigurando Apache Torque con MySQL}
+La instalación bajo MySQL es muy parecida a la de Postgresql. A continuación se detallan los cambios y diferencias respecto a la instalación sobre Postgresql.
 
-\subsection{Compilando nuestro primer proyecto}
-\subsection{Configuración XML}
-	\begin{center}
-		\includegraphics[height=8cm]{img/xml-config.png}
-	\end{center}
+\subsection{Configuración y ejecución de Generator}
+El driver JDBC de la base de datos que descargamos en esta ocasión es para MySQL, desde la siguiente dirección: \url{http://dev.mysql.com/downloads/connector/j/} y lo introducimos en la carpeta “lib” de Generator.
+
+En la edición del archivo build.propierties, se realizan las siguientes modificaciones:
+\input{code/build.propierties-mysql}
+
+\subsection{Configuración del proyecto desde eclipse}
+Las propiedades del archivo Torque.properties son como siguen para MySQL:
+
+\input{code/torque.properties-mysql}
+
+En este caso, en driver que hay que añadir a nuestro proyecto eclipse es el siguiente:
+\begin{lstlisting}
+coches\orque-gen-3.3\lib
+\end{lstlisting}
+
+\begin{center}
+	\includegraphics{img/mysql-file.png}
+\end{center}
+
+\section{Instalando y cofigurando Apache Torque con Microsoft SQL Server}
+Para la instalación con MS SQL Server habrá que crear un nuevo usuario, o dar permisos a uno ya existente para el acceso a la base de datos que estemos utilizando. Este usuario debe tener la autenticación de SQL Server y el rol db\_ owner. Hay varios drivers disponibles para este tipo de base de datos, como jTDS y uno propio de MS SQL Server disponible desde su página de descargas. En esta guía explicaremos como utilizar jTDS.
+
+\subsection{Configuración y ejecución de Generator}
+En la edición del archivo build.propierties, se realizan las siguientes modificaciones:
+
+\input{code/build.propierties-sqlserver}
+
+\subsection{Configuración del proyecto desde eclipse}
+Las propiedades del archivo Torque.properties son de la siguiente forma en MS SQL Server:
+\input{code/torque.properties-sqlserver}
+
+Por último se añade el driver de la base de datos a nuestro proyecto en Eclipse, situado en:
+\begin{lstlisting}
+coches\torque-gen-3.3\lib
+\end{lstlisting}
+
+%Falta imagen del conector java
+
+Notas acerca el archivo de esquema XML:
+
+Hay que tener cuidado con el uso de palabras clave de MS SQL en tablas y columnas. 
+MS SQL admite poner el atributo defaultIdMethod = “native” para generar los campos automáticamente.
+
+\section{Configuración del archivo schema.xml}
+\begin{center}
+	\includegraphics[height=8cm]{img/xml-config.png}
+\end{center}
 	
 	El esquema de base de datos de torque describe los elementos y atributos de la propia base de datos que estemos utillizando. A continuación se describe los principales elementos y las bases de datos compatibles actualmente.
 
-Elemento: database
-
+\subsection{Elemento Database}
 Puede contener los siguientes 8 atributos:
 
 name: el nombre de la base de datos.
@@ -270,16 +315,13 @@ underscore: se elimina el subrayado, la primera letra y después de un guión se
 javaname: con guiones bajos, pero las letras no se convierten en minúscula.
 heavyIndexing: agrega indices adicionales para columnas con varias claves primarias.
 
-También puede contener los siguientes elementos:
-
-Elemento: external-schema
+\subsubsection{External-schema}
 Incluye otro archivo de esquema. Puede haber 0 o más elementos de este tipo.
 
 <Externa del esquema
            		filename = "extext-schema.xml" />
 
-
-Elemento: domain
+\subsubsection{Domain}
 Se utiliza para definir los atributos de las columnas.Puede haber 0 o más elementos de este tipo. 
 
 <domain
@@ -290,7 +332,7 @@ Se utiliza para definir los atributos de las columnas.Puede haber 0 o más eleme
            default="0"
            description="amount domain" />
 
-      
+\subsubsection{Table}
 Elemento: table
 Define las tablas y sus atributos:
 
@@ -326,7 +368,7 @@ description: se utiliza para la generación de documentación.
 
 El elemento “table” también puede contener los siguientes elementos:
 
-Elemento: column
+\paragraph{Column}
 Puede haber 1 o más elementos de este tipo por tabla.
 
 \begin{lstlisting}
@@ -359,8 +401,7 @@ javaNamingMethod: especifica el nombre que será utilizado en la clase Java del 
 
 description: se utiliza para la generación de documentación.
 
-
-Elemento: foreing-key
+\paragraph{Foreing-key}
 Puede haber 0 o más elementos de este tipo por tabla.
 
 \begin{lstlisting}
@@ -382,7 +423,7 @@ name: el nombre de la clave foránea.
 onUpdate: acción a realizar cuando se actualiza el valor en foreignTable.
 onDelete: acción a realizar cuando se elimina el valor en foreingTable.
 
-Elemento: index
+\paragraph{Index}
 Puede haber 0 o más elementos de este tipo por tabla.
 
 \begin{lstlisting}
@@ -394,65 +435,16 @@ Puede haber 0 o más elementos de este tipo por tabla.
 El elemento index tiene 1 atributo asociado:
 name: el nombre del índice. 
 Puede contener 1 o más elementos  del tipo:
-	
-Elemento: index-column
 
+\subparagraph{Index-column}
 \begin{lstlisting}
 <index-column name="INDEX_COLUMN"/>
 \end{lstlisting}
 
 Tiene solo un atributo: “name” que indica el nombre del índice de la columna. Este elemento no puede contener otros elementos.
 
-\section{Instalando y cofigurando Apache Torque con MySQL}
-La instalación bajo MySQL es muy parecida a la de Postgresql. A continuación se detallan los cambios y diferencias respecto a la instalación sobre Postgresql.
-
-\subsection{Configuración y ejecución de Generator}
-El driver JDBC de la base de datos que descargamos en esta ocasión es para MySQL, desde la siguiente dirección: \url{http://dev.mysql.com/downloads/connector/j/} y lo introducimos en la carpeta “lib” de Generator.
-
-En la edición del archivo build.propierties, se realizan las siguientes modificaciones:
-\input{code/build.propierties-mysql}
-
-\subsection{Configuración del proyecto desde eclipse}
-Las propiedades del archivo Torque.properties son como siguen para MySQL:
-
-\input{code/torque.properties-mysql}
-
-En este caso, en driver que hay que añadir a nuestro proyecto eclipse es el siguiente:
-\begin{lstlisting}
-coches\orque-gen-3.3\lib
-\end{lstlisting}
-
-\begin{center}
-	\includegraphics{img/mysql-file.png}
-\end{center}
-
-\section{Instalando y cofigurando Apache Torque con Microsoft SQL Server}
-Para la instalación con MS SQL Server habrá que crear un nuevo usuario, o dar permisos a uno ya existente para el acceso a la base de datos que estemos utilizando. Este usuario debe tener la autenticación de SQL Server y el rol db\_ owner. Hay varios drivers disponibles para este tipo de base de datos, como jTDS y uno propio de MS SQL Server disponible desde su página de descargas. En esta guía explicaremos como utilizar jTDS.
-
-\subsection{Configuración y ejecución de Generator}
-En la edición del archivo build.propierties, se realizan las siguientes modificaciones:
-
-\input{code/build.propierties-sqlserver}
-
-\subsection{Configuración del proyecto desde eclipse}
-Las propiedades del archivo Torque.properties son de la siguiente forma en MS SQL Server:
-
-\input{code/torque.properties-sqlserver}
-Por último se añade el driver de la base de datos a nuestro proyecto en Eclipse, situado en:
-
-\begin{lstlisting}
-coches\torque-gen-3.3\lib
-\end{lstlisting}
-
-Notas acerca el archivo de esquema XML:
-
-Hay que tener cuidado con el uso de palabras clave de MS SQL en tablas y columnas. 
-MS SQL admite poner el atributo defaultIdMethod = “native” para generar los campos automáticamente.
-
-Clases generadas : funcionamiento
-
-Usando el objeto:
-
+\section{Funcionamiento de las clases generadas}
+\subsection{Usando el objeto}
 Torque genera cuatro clases por cada tabla. Por ejemplo en la aplicación coche nos aparecen las siguientes clases:
 BaseCoche.java: Es donde Torque genera toda la lógica necesaria para la clase coche.
 
@@ -462,12 +454,9 @@ BaseCochePeer.java: En esta clase Torque nos proporciona métodos estáticos par
 
 CochePeer.java: Al igual que en Coche.java esta clase extiende de BaseCochePeer.java y Torque nos la genera vacía para que añadamos nuestros propios métodos estáticos.
 
-insertando filas:
+\subsection{Insertando filas}
 
 Para añadir una nueva fila en la tabla “Publisher”, existen dos formas de hacerlo. Una es utilizando la clase estática generada “xPeer” (siendo ‘x’ el nombre de la tabla), y otra mediante objetos con el nombre propio de la tabla.
-
-
-
 
 Para insertar una nueva fila mediante objetos, en primer lugar debemos de crear un objeto de la tabla que vamos a modificar/insertar datos.
 
@@ -480,8 +469,8 @@ addison.setName("Addison Wesley Professional");
 Finalmente, para guardar los datos del objeto en la base de datos, llamamos al método “save()”.
 
 addison.save();
-Usando la clase estática:
 
+\subsection{Usando la clase estática}
 Creamos un objeto de la tabla.
 
 Author stevens = new Author();
@@ -496,8 +485,7 @@ Usamos la clase estática en este caso llamada “AuthorPeer”, para insertar e
 AuthorPeer.doInsert(stevens);
 
 
-Seleccionando Filas:
-
+\subsection{Seleccionando filas}
 La clase generada “Criteria” es la equivalente al ‘where’ de sql. Para una consulta tendremos que generar siempre un objeto Criteria, en caso de que la consulta no incluya un tipo ‘where’, simplemente se crea el objeto Criteria y no se modifica ningún atributo.
 
 Criteria crit = new Criteria();
@@ -518,7 +506,7 @@ Otro ejemplo, para una comparación “mayor que”
 crit.add(CochePeer.COCHE_ID, 2, Criteria.GREATER_THAN);
 \end{lstlisting}
 
-Actualizando filas: 
+\subsection{Actualizando filas} 
 
 Para la actualización de filas, se puede utilizar el método ‘doUpdate’ de la clase estática ‘xPeer’:
 
@@ -527,7 +515,7 @@ effective.save();
 tcpip.setAuthor(bloch);
 BookPeer.doUpdate(tcpip);
 
-Eliminando filas:
+\subsection{Eliminando filas}
 
 Para eliminar filas, se utiliza el método ‘doDelete’ de ‘xPeer’
 
@@ -540,31 +528,9 @@ crit.add(BookPeer.ISBN, "0-201-63346-9");
 crit.add(BookPeer.TITLE, "TCP/IP Illustrated, Volume 1");
 BookPeer.doDelete(crit);
 
-
-
-
-
-
-
-Estudiar datadump
-en el ant, en la última sentencia, se añade “datadump” 
+%Estudiar datadump
+En el ant, en la última sentencia, se añade “datadump” 
 ‘ant -f build-torque.xml datadump’
-
-
-
-
-
-
-
-
-
-
-
-
-
-APLICACION
-
-incluir xml de la aplicación y dar una pequeña explicación de la misma.
 
 \section{Aplicacion}
 \subsection{Esquema base datos}
