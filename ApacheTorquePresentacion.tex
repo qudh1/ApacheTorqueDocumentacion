@@ -3,13 +3,67 @@
 
 %Codificación e idioma
 \usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% Url
+\usepackage{url}
+
+% Graphics
+%\usepackage[pdftex]{graphicx}
+%\DeclareGraphicsExtensions{.png,.jpg}
+
+\usepackage{wrapfig}
+
+%Resaltado de sintaxis
+\usepackage{color}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+\definecolor{red}{rgb}{0.6,0,0} % strings
+\definecolor{green}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{purple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{blue}{rgb}{0.25,0.35,0.75} % doc
+
+\usepackage{listings}
+\lstset {
+	frame				=	Ltb,
+    framerule			=	0pt,
+    aboveskip			=	0.5cm,
+    framextopmargin		=	3pt,
+    framexbottommargin	=	3pt,
+    framexleftmargin	=	0.4cm,
+    framesep			=	0pt,
+    rulesep				=	.4pt,
+    backgroundcolor		=	\color{gray97},
+    rulesepcolor		=	\color{black},
+    %
+    stringstyle			=	\color{red},
+    showstringspaces	=	false,
+    basicstyle			=	\ttfamily\small,
+    commentstyle		=	\color{green},
+    morecomment         =   [s][\color{blue}]{/*}{*/},
+    keywordstyle		=	\color{purple}\bfseries,
+    tabsize					=	3,
+    %
+    numbers				=	left,
+    numbersep			=	15pt,
+    numberstyle			=	\tiny,
+    numberfirstline		=	false,
+    breaklines			=	true,
+}
 
 \begin{document}
 
-\title{Titulo}
-\author{Autor}
+\title{Apache Torque}
+\author{
+	Francisco J. Serrano\\
+	Benjamín Fernández\\
+	Juan María Frías\\
+	David Doñas\\
+	Enrique Ríos
+}
 
 \begin{frame}
 \titlepage
@@ -38,6 +92,139 @@
 	\frametitle{El problema}
 	\setbeamercovered{invisible}
 	Y ahora, sin \pause bloque!
+\end{frame}
+
+% Benjamín Fernández
+\section{Instalando y configurando Apache Torque con PostgreSQL}
+
+\begin{frame}
+	\frametitle{Software necesario}
+	\setbeamercovered{invisible}
+	
+	En primer lugar hay que descargar todo el software necesario:
+	\begin{description}
+	\item[Runtime] \url{http://apache.rediris.es/db/torque/torque-3.3/binaries/torque-3.3.tar.gz}
+	\item[Generator] \url{http://ftp.udc.es/apache/db/torque/torque-3.3/binaries/torque-gen-3.3.tar.gz}
+	\item[Village] \url{http://apache.rediris.es/db/torque/torque-3.3/binaries/village-3.3.tar.gz}
+	\item[Ant] \url{http://ftp.udc.es/apache//ant/binaries/apache-ant-1.8.4-bin.zip}
+	\end{description}
+\end{frame}
+
+\subsection{Instalación de Ant}
+\begin{frame}[fragile, allowframebreaks]
+	\frametitle{Instalación de Ant}
+	\setbeamercovered{invisible}
+	
+	\begin{itemize}
+		\item Descargar Ant
+		\item Descomprimir Ant en el directorio que deseemos. Por ejemplo, C:\textbackslash
+		\item Por mayor comodidad, renombrar la carpeta descomprimida "apache-ant-1.8.4" como "ant"
+		\item Ejecutamos la consola (cmd.exe) e introducimos las siguientes variables de entorno:
+			\begin{lstlisting}
+			set ANT_HOME= C:\ant
+			set JAVA_HOME C:\Program Files\Java\jdk1.7.0_07 (Directorio donde se encuentra vuestra maquina JAVA)
+			\end{lstlisting}	
+		
+		\item Introducimos la dirección del directorio "ant" en el PATH
+		\begin{lstlisting}
+		set PATH=%PATH%;%ANT_HOME%\bin
+		\end{lstlisting}
+		
+		\item Obtener las dependencias de bibliotecas de Ant:
+		\begin{itemize}
+			\item Desde cmd.exe nos dirigimos al directorio de Ant.
+			\item Dentro de él, ejecutamos:
+			\begin{lstlisting}
+			ant -f fetch.xml -Ddest=system
+			\end{lstlisting}
+		\end{itemize}
+	
+		\item Instalación de Ant finalizada, ya podemos usar Ant desde la consola.	
+	\end{itemize}
+\end{frame}
+
+\subsection{Creación del proyecto}
+
+\begin{frame}
+	\frametitle{Creación del proyecto}
+	\setbeamercovered{invisible}
+	
+	\begin{itemize}
+		\item Crear un proyecto eclipse.
+		\item En el interior de la carpeta del proyecto descomprimimos los paquetes:
+			\begin{itemize}
+				\item Runtime
+				\item Generator
+				\item Village
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\subsection{Configuración y ejecución de Generator}
+
+\begin{frame}
+	\frametitle{Configuración y ejecución de Generator}
+	\setbeamercovered{invisible}
+	
+	\begin{itemize}
+		\item Acceder a la carpeta “torque-gen-3.3” de nuestro proyecto.
+		\item Descargar el driver JDBC de la base de datos que queremos utilizar, en nuestro caso Postgresql, desde la siguiente dirección: http://jdbc.postgresql.org/ y lo introducimos en la carpeta “lib” de Generator.
+		\item En Postgresql, creamos un usuario “user1” con contraseña “user1” y una base de datos llamada “coches”, de la que es propietario “user1”.
+		\item Crear un directorio en la raíz del proyecto llamado “schema”, donde introduciremos el archivo xml en el cual se describe la base de datos.
+		\item Editar el archivo “build.propierties” añadiendo la configuración de nuestro proyecto. En amarillo se encuentran las líneas que han sido modificadas con respecto al archivo de configuración por defecto.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]
+	\frametitle{build.propierties}
+	\setbeamercovered{invisible}
+	
+	\begin{lstlisting}
+	#Nombre de nuestro proyecto
+	torque.proyect = coches
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+	#Gestor de bases de datos
+	torque.database = postgresql
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+	# Direcciones de acceso a la base de datos y puerto de escucha
+	torque.database.createUrl = jdbc:postgresql://127.0.0.1:5432/coches
+	torque.database.buildUrl = jdbc:postgresql://127.0.0.1:5432/coches
+	torque.database.url = jdbc:postgresql://127.0.0.1:5432/coches	
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+	# Driver para acceder a la base de datos
+	torque.database.driver = org.postgresql.Driver
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+	# Usuario y password para acceder a la base de datos
+	torque.database.user = user1
+	torque.database.password = user1
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+	#Direccion del host donde se encuentra la base de datos
+	torque.database.host = 127.0.0.1
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+	# Direccion donde se generaran los ficheros .java y .sql
+	torque.output.dir = ../src
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+	# Direccion desde donde se obtendra el esquema .xml de la base de datos
+	torque.schema.dir = ../schema
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]
+	\input{code/coches-schema}
 \end{frame}
 
 \end{document}
