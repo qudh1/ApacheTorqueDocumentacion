@@ -14,6 +14,9 @@
 
 \usepackage{wrapfig}
 
+% Soporte multicolumna
+\usepackage{multicol}
+
 %Resaltado de sintaxis
 \usepackage{color}
 \definecolor{gray97}{gray}{.97}
@@ -58,7 +61,7 @@
 	Francisco J. Serrano\\
 	Benjamín Fernández\\
 	Juan María Frías\\
-	David Doñas\\
+	David Doña\\
 	Enrique Ríos
 }
 
@@ -102,32 +105,14 @@
 
 	\subsection{Configurando y ejecutando Generator}
 		\input{inc/ic-postgresql.configurar-ejecutar-generator}
-Accedemos a la carpeta {\bf torque-gen-3.3} de nuestro proyecto.
 
-Descargamos el driver JDBC de la base de datos que queremos utilizar, en nuestro caso Postgresql, desde la siguiente dirección: http://jdbc.postgresql.org/ y lo introducimos en la carpeta “lib” de Generator.
+		\subsubsection{Editando build.propierties}
+			\input{code/build.propierties}
 
-En Postgresql, creamos un usuario “user1” con contraseña “user1” y una base de datos llamada “coches”, de la que es propietario “user1”.
+		\subsubsection{Editando coches-schema.xml}
+			\input{code/coches-schema}
 
-Creamos un directorio en la raíz del proyecto llamado “schema”, donde introduciremos el archivo xml en el cual se describe la base de datos.
-
-Editamos el archivo “build.propierties” añadiendo la configuración de nuestro proyecto. En amarillo se encuentran las líneas que han sido modificadas con respecto al archivo de configuración por defecto.
-
-\subsubsection{build.propierties}
-\input{code/build.propierties}
-
-Ahora creamos un archivo XML llamado "coches-schema.xml", en el directorio "schema", donde describiremos la estructura de la base de datos de nuestro sistema. (En este ejemplo solo se usará una tabla, más adelante se explicará las diferentes configuraciones de este fichero)
-
-subsubsection{coches-schema.xml}
-\input{code/coches-schema}
-
-Desde cmd.exe accedemos al directorio “torque-gen-3.3” y ejecutamos las siguientes instrucciones: 
-Esta instrucción genera los archivos .java y .sql en la carpeta que hemos indicado antes en nuestro archivo “build.propierties”, en nuestro caso en “src”: ant -f build-torque.xml 
-La siguiente crea y configura la base de datos:  ant -f build-torque.xml create-db.
-Por último esta instrucción crea las tablas en la base de datos, ejecutando el .sql creado con anterioridad: ant -f build-torque.xml insert-sql
-
-Ya tenemos en la carpeta “src” 2 subcarpetas, una llamada “java” donde se encuentran los fuentes de nuestro proyecto y otra llamada “sql”, donde se encuentran los scripts de generación de la base de datos. Movemos la carpeta sql a la raíz del proyecto, ya que no la necesitaremos. Finalmente movemos el contenido del directorio “java” al directorio “src” y eliminamos el directorio “java”. Ya tenemos el proyecto preparado, para seguir trabajando desde Eclipse.
-
-\subsection{Configuración del proyecto desde Eclipse}
+	\subsection{Configuración del proyecto desde Eclipse}
 Como podemos observar existen numerosos errores en nuestro proyecto, ello es debido a la falta de las librerías de Torque y Village. Las añadimos desde las siguientes direcciones:
 
 \begin{lstlisting}
@@ -150,7 +135,12 @@ coches\torque-3.3\
 	
 	\input{code/java-test}
 	
-	Desde nuestro main debemos de inicializar Torque, para ello hemos insertado la línea de código: Torque.init("Torque.properties"). Toque.init toma como parámetro un fichero llamado Torque.properties, situado en la carpeta “torque-3.3”. Movemos ese archivo a la raíz del proyecto (para que sea accesible directamente), y procedemos a configurarlo. En amarillo se encuentran las líneas que han sido modificadas con respecto al archivo de configuración por defecto.
+	Desde nuestro main debemos de inicializar Torque, para ello hemos insertado la línea de código: 
+	\begin{lstlisting}[language=java]
+	Torque.init("Torque.properties")
+	\end{lstlisting} 
+	
+	{\bf Toque.init} toma como parámetro un fichero llamado {\bf Torque.properties}, situado en la carpeta {\bf torque-3.3}. Movemos ese archivo a la raíz del proyecto (para que sea accesible directamente), y procedemos a configurarlo. En amarillo se encuentran las líneas que han sido modificadas con respecto al archivo de configuración por defecto.
 	
 	\input{code/torque.properties}
 	
@@ -219,7 +209,7 @@ coches\torque-gen-3.3\lib
 Notas acerca el archivo de esquema XML:
 
 Hay que tener cuidado con el uso de palabras clave de MS SQL en tablas y columnas. 
-MS SQL admite poner el atributo defaultIdMethod = “native” para generar los campos automáticamente.
+MS SQL admite poner el atributo {\em defaultIdMethod = “native”} para generar los campos automáticamente.
 
 \section{Configuración del archivo schema.xml}
 \begin{center}
@@ -231,34 +221,40 @@ MS SQL admite poner el atributo defaultIdMethod = “native” para generar los 
 \subsection{Elemento Database}
 Puede contener los siguientes 8 atributos:
 
-name: el nombre de la base de datos.
-defaultIdMethod: este se aplica a aquellas tablas que no tienen un atributo id definido. Por defecto es “none”. Normalmente se utiliza si no quieres ID’s generados.
-defaultJavaType: tipo predeterminado de las columnas de la base de datos ( “object” o “primitive”, por defecto es primitive).
-package: paquete base donde se generará los modelos de objetos asociados con la base de datos. Este reemplaza la propiedad “targetPackage” del archivo build.properties de Torque.
-baseClass: la clase base que se utilizará al generar el modelo de objetos.
-basePeer: la clase peer a utilizar al generar los pares del modelo de objetos.
-defaultJavaNamingMethod: este atributo determina como se convierten los nombres de las tablas y columnas en una clase Java o el nombre del método. Puede tener 3 valores diferentes:
-nochange: no se realizan cambios.
-underscore: se elimina el subrayado, la primera letra y después de un guión se pone la letra en mayúscula, el resto de caracteres en minúscula.
-javaname: con guiones bajos, pero las letras no se convierten en minúscula.
-heavyIndexing: agrega indices adicionales para columnas con varias claves primarias.
+\begin{description}
+	\item[name] el nombre de la base de datos.
+	\item[defaultIdMethod] este se aplica a aquellas tablas que no tienen un atributo id definido. Por defecto es “none”. Normalmente se utiliza si no quieres ID’s generados.
+	\item[defaultJavaType] tipo predeterminado de las columnas de la base de datos ( “object” o “primitive”, por defecto es primitive).
+	\item[package] paquete base donde se generará los modelos de objetos asociados con la base de datos. Este reemplaza la propiedad “targetPackage” del archivo build.properties de Torque.
+	\item[baseClass] la clase base que se utilizará al generar el modelo de objetos.
+	\item[basePeer] la clase peer a utilizar al generar los pares del modelo de objetos.
+	defaultJavaNamingMethod: este atributo determina como se convierten los nombres de las tablas y columnas en una clase Java o el nombre del método. Puede tener 3 valores diferentes:
+	\item[nochange] no se realizan cambios.
+	\item[underscore] se elimina el subrayado, la primera letra y después de un guión se pone la letra en mayúscula, el resto de caracteres en minúscula.
+	\item[javaname] con guiones bajos, pero las letras no se convierten en minúscula.
+	\item[heavyIndexing] agrega indices adicionales para columnas con varias claves primarias.
+\end{description}
 
 \subsubsection{External-schema}
 Incluye otro archivo de esquema. Puede haber 0 o más elementos de este tipo.
 
+\begin{lstlisting}[language=XML]
 <Externa del esquema
-           		filename = "extext-schema.xml" />
+	filename = "extext-schema.xml" />
+\end{lstlisting}
 
 \subsubsection{Domain}
 Se utiliza para definir los atributos de las columnas.Puede haber 0 o más elementos de este tipo. 
 
+\begin{lstlisting}[language=XML]
 <domain
-           name="amount"
-           type="NUMERIC"
-           size="10"
-           scale="2"
-           default="0"
-           description="amount domain" />
+	name="amount"
+	type="NUMERIC"
+	size="10"
+	scale="2"
+	default="0"
+	description="amount domain" />
+\end{lstlisting}
 
 \subsubsection{Table}
 Elemento: table
@@ -299,7 +295,7 @@ El elemento “table” también puede contener los siguientes elementos:
 \paragraph{Column}
 Puede haber 1 o más elementos de este tipo por tabla.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <column
            		name="MY_COLUMN"
            		javaName="Column"
@@ -332,7 +328,7 @@ description: se utiliza para la generación de documentación.
 \paragraph{Foreing-key}
 Puede haber 0 o más elementos de este tipo por tabla.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <foreign-key foreignTable="MY_TABLE"
 	name="MY_TABLE_FK"
 	onUpdate="none"
@@ -354,7 +350,7 @@ onDelete: acción a realizar cuando se elimina el valor en foreingTable.
 \paragraph{Index}
 Puede haber 0 o más elementos de este tipo por tabla.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <index name="MY_INDEX">
 	<!-- index-column info -->
 </index>
@@ -365,22 +361,24 @@ name: el nombre del índice.
 Puede contener 1 o más elementos  del tipo:
 
 \subparagraph{Index-column}
-\begin{lstlisting}
+Tiene solo un atributo: “name” que indica el nombre del índice de la columna. Este elemento no puede contener otros elementos.
+\begin{lstlisting}[language=xml]
 <index-column name="INDEX_COLUMN"/>
 \end{lstlisting}
-
-Tiene solo un atributo: “name” que indica el nombre del índice de la columna. Este elemento no puede contener otros elementos.
 
 \section{Funcionamiento de las clases generadas}
 \subsection{Usando el objeto}
 Torque genera cuatro clases por cada tabla. Por ejemplo en la aplicación coche nos aparecen las siguientes clases:
-BaseCoche.java: Es donde Torque genera toda la lógica necesaria para la clase coche.
 
-Coche.java: Esta clase extiende de BaseCoche.java, Torque nos proporciona esta clase vacía, para que en el caso de que necesitemos añadir nuevos métodos a Coche, lo hagamos en ella.
+\begin{description}
+	\item[BaseCoche.java] Es donde Torque genera toda la lógica necesaria para la clase coche.
 
-BaseCochePeer.java: En esta clase Torque nos proporciona métodos estáticos para el uso de la base de datos.
+	\item[Coche.java] Esta clase extiende de BaseCoche.java, Torque nos proporciona esta clase vacía, para que en el caso de que necesitemos añadir nuevos métodos a Coche, lo hagamos en ella.
 
-CochePeer.java: Al igual que en Coche.java esta clase extiende de BaseCochePeer.java y Torque nos la genera vacía para que añadamos nuestros propios métodos estáticos.
+	\item[BaseCochePeer.java] En esta clase Torque nos proporciona métodos estáticos para el uso de la base de datos.
+
+	\item[CochePeer.java] Al igual que en Coche.java esta clase extiende de BaseCochePeer.java y Torque nos la genera vacía para que añadamos nuestros propios métodos estáticos.
+\end{description}
 
 \subsection{Insertando filas}
 
@@ -388,47 +386,65 @@ Para añadir una nueva fila en la tabla “Publisher”, existen dos formas de h
 
 Para insertar una nueva fila mediante objetos, en primer lugar debemos de crear un objeto de la tabla que vamos a modificar/insertar datos.
 
+\begin{lstlisting}[language=Java]
 Publisher addison = new Publisher();
+\end{lstlisting}
 
 A continuación rellenamos los atributos del objeto, que son los mismos que las columnas de la tabla.
 
+\begin{lstlisting}[language=Java]
 addison.setName("Addison Wesley Professional");
+\end{lstlisting}
 
 Finalmente, para guardar los datos del objeto en la base de datos, llamamos al método “save()”.
 
+\begin{lstlisting}[language=Java]
 addison.save();
+\end{lstlisting}
 
 \subsection{Usando la clase estática}
 Creamos un objeto de la tabla.
 
+\begin{lstlisting}[language=Java]
 Author stevens = new Author();
+\end{lstlisting}
 
 Se rellenan los campos.
 
+\begin{lstlisting}[language=Java]
 stevens.setFirstName("W.");
 stevens.setLastName("Stevens");
+\end{lstlisting}
 
 Usamos la clase estática en este caso llamada “AuthorPeer”, para insertar el nuevo registro en la base de datos
 
+\begin{lstlisting}[language=Java]
 AuthorPeer.doInsert(stevens);
+\end{lstlisting}
 
 
 \subsection{Seleccionando filas}
 La clase generada “Criteria” es la equivalente al ‘where’ de sql. Para una consulta tendremos que generar siempre un objeto Criteria, en caso de que la consulta no incluya un tipo ‘where’, simplemente se crea el objeto Criteria y no se modifica ningún atributo.
 
+\begin{lstlisting}[language=Java]
 Criteria crit = new Criteria();
+\end{lstlisting}
 
 La clase estática “xPeer” contiene métodos para la manipulación de la base de datos, como por ejemplo usaremos una consulta de selección
 
+\begin{lstlisting}[language=Java]
 List books = BookPeer.doSelect(crit);
+\end{lstlisting}
 
 Si queremos añadir alguna condición where, simplemente utilizamos el método “add”. Dicho método tiene gran variedad de cabeceras para los distintos tipos de condiciones (group by, like....). En este caso, ponemos como condición la igualdad:
 
+\begin{lstlisting}[language=Java]
 Criteria crit = new Criteria();
 crit.add(BookPeer.ISBN, "0-618-12902-2");
 List books = BookPeer.doSelect(crit);
+\end{lstlisting}
 
-Otro ejemplo, para una comparación “mayor que”
+Otro ejemplo, para una comparación “mayor que”:
 
 \begin{lstlisting}
 crit.add(CochePeer.COCHE_ID, 2, Criteria.GREATER_THAN);
@@ -438,15 +454,18 @@ crit.add(CochePeer.COCHE_ID, 2, Criteria.GREATER_THAN);
 
 Para la actualización de filas, se puede utilizar el método ‘doUpdate’ de la clase estática ‘xPeer’:
 
+\begin{lstlisting}[language=Java]
 effective.setAuthor(stevens);
 effective.save();
 tcpip.setAuthor(bloch);
 BookPeer.doUpdate(tcpip);
+\end{lstlisting}
 
 \subsection{Eliminando filas}
 
 Para eliminar filas, se utiliza el método ‘doDelete’ de ‘xPeer’
 
+\begin{lstlisting}[language=Java]
 crit = new Criteria();
 crit.add(BookPeer.ISBN, "0-618-12902-2");
 BookPeer.doDelete(crit);
@@ -455,6 +474,7 @@ crit = new Criteria();
 crit.add(BookPeer.ISBN, "0-201-63346-9");
 crit.add(BookPeer.TITLE, "TCP/IP Illustrated, Volume 1");
 BookPeer.doDelete(crit);
+\end{lstlisting}
 
 %Estudiar datadump
 En el ant, en la última sentencia, se añade “datadump” 

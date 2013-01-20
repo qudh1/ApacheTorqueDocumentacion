@@ -1,3 +1,6 @@
+Ahora creamos un archivo XML llamado {\bf coches-schema.xml}, en el directorio {\bf schema}, donde describiremos la estructura de la base de datos de nuestro sistema.
+{\em En este ejemplo solo se usará una tabla, más adelante se explicará las diferentes configuraciones de este fichero. La tabla usada es la siguiente:}
+
 \begin{lstlisting}[language=xml]
 <!DOCTYPE database SYSTEM "http://db.apache.org/torque/dtd/database_3_3.dtd">
 
@@ -18,3 +21,25 @@
 	</table>
 </database>
 \end{lstlisting}
+
+Desde cmd.exe accedemos al directorio {\bf torque-gen-3.3} y ejecutamos las siguientes instrucciones:
+\begin{enumerate}
+	\item Esta instrucción genera los archivos .java y .sql en la carpeta que hemos indicado antes en nuestro archivo {\em build.propierties}, en nuestro caso en {\em src}:
+	\begin{lstlisting}
+	ant -f build-torque.xml
+	\end{lstlisting}
+	 
+	\item La siguiente crea y configura la base de datos:
+	\begin{lstlisting}
+	ant -f build-torque.xml create-db
+	\end{lstlisting}
+	
+	\item Por último esta instrucción crea las tablas en la base de datos, ejecutando el .sql creado con anterioridad: 
+	\begin{lstlisting}
+	ant -f build-torque.xml insert-sql
+	\end{lstlisting}
+\end{enumerate}
+
+Ya tenemos en la carpeta {\em src} dos subcarpetas, una llamada {\em java} donde se encuentran los fuentes de nuestro proyecto; y otra llamada {\em sql}, donde se encuentran los scripts de generación de la base de datos. Movemos la carpeta {\em sql} a la raíz del proyecto, ya que no la necesitaremos.
+
+Finalmente movemos el contenido del directorio {\em java} al directorio {\em src} y eliminamos el directorio {\em java}. Ya tenemos el proyecto preparado, para seguir trabajando desde Eclipse.
