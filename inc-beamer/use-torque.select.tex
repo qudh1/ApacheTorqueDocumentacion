@@ -1,0 +1,25 @@
+La clase generada {\bf Criteria} es la equivalente al {\em where} de sql. Para una consulta tendremos que generar siempre un objeto Criteria, en caso de que la consulta no incluya un tipo {\em where}, simplemente se crea el objeto {\bf Criteria} y no se modifica ningún atributo.
+
+\begin{lstlisting}[language=Java]
+Criteria crit = new Criteria();
+\end{lstlisting}
+
+La clase estática {\bf xPeer} contiene métodos para la manipulación de la base de datos, como por ejemplo usaremos una consulta de selección
+
+\begin{lstlisting}[language=Java]
+List books = BookPeer.doSelect(crit);
+\end{lstlisting}
+
+Si queremos añadir alguna condición where, simplemente utilizamos el método {\em add}. Dicho método tiene gran variedad de cabeceras para los distintos tipos de condiciones (group by, like....). En este caso, ponemos como condición la igualdad:
+
+\begin{lstlisting}[language=Java]
+Criteria crit = new Criteria();
+crit.add(BookPeer.ISBN, "0-618-12902-2");
+List books = BookPeer.doSelect(crit);
+\end{lstlisting}
+
+Otro ejemplo, para una comparación {\em mayor que}:
+
+\begin{lstlisting}
+crit.add(CochePeer.COCHE_ID, 2, Criteria.GREATER_THAN);
+\end{lstlisting}

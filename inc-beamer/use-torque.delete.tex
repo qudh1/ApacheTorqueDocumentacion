@@ -1,0 +1,19 @@
+Para eliminar filas, se utiliza el método {\em doDelete} de {\bf xPeer}
+
+\begin{lstlisting}[language=Java]
+crit = new Criteria();
+crit.add(BookPeer.ISBN, "0-618-12902-2");
+BookPeer.doDelete(crit);
+
+crit = new Criteria();
+crit.add(BookPeer.ISBN, "0-201-63346-9");
+crit.add(BookPeer.TITLE, "TCP/IP Illustrated, Volume 1");
+BookPeer.doDelete(crit);
+\end{lstlisting}
+
+%Estudiar datadump
+En Ant, en la última sentencia, se añade {\em datadump} 
+
+\begin{lstlisting}
+ant -f build-torque.xml datadump
+\end{lstlisting}

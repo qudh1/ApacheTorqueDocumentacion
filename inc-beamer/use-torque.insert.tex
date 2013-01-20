@@ -1,0 +1,19 @@
+Para añadir una nueva fila en la tabla “Publisher”, existen dos formas de hacerlo. Una es utilizando la clase estática generada “xPeer” (siendo ‘x’ el nombre de la tabla), y otra mediante objetos con el nombre propio de la tabla.
+
+Para insertar una nueva fila mediante objetos, en primer lugar debemos de crear un objeto de la tabla que vamos a modificar/insertar datos.
+
+\begin{lstlisting}[language=Java]
+Publisher addison = new Publisher();
+\end{lstlisting}
+
+A continuación rellenamos los atributos del objeto, que son los mismos que las columnas de la tabla.
+
+\begin{lstlisting}[language=Java]
+addison.setName("Addison Wesley Professional");
+\end{lstlisting}
+
+Finalmente, para guardar los datos del objeto en la base de datos, llamamos al método “save()”.
+
+\begin{lstlisting}[language=Java]
+addison.save();
+\end{lstlisting}

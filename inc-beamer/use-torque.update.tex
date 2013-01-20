@@ -1,0 +1,8 @@
+Para la actualización de filas, se puede utilizar el método {\em doUpdate} de la clase estática {\bf xPeer}:
+
+\begin{lstlisting}[language=Java]
+effective.setAuthor(stevens);
+effective.save();
+tcpip.setAuthor(bloch);
+BookPeer.doUpdate(tcpip);
+\end{lstlisting}

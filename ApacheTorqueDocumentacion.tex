@@ -117,13 +117,9 @@
 	
 \section{Instalando y cofigurando Apache Torque con MySQL}
 	\input{inc/ic-mysql}
-La instalación bajo MySQL es muy parecida a la de Postgresql. A continuación se detallan los cambios y diferencias respecto a la instalación sobre Postgresql.
 
-\subsection{Configuración y ejecución de Generator}
-El driver JDBC de la base de datos que descargamos en esta ocasión es para MySQL, desde la siguiente dirección: \url{http://dev.mysql.com/downloads/connector/j/} y lo introducimos en la carpeta {\em lib} de Generator.
-
-En la edición del archivo build.propierties, se realizan las siguientes modificaciones:
-\input{code/build.propierties-mysql}
+	\subsection{Configuración y ejecución de Generator}
+		\input{inc/ic-mysql.configurar-ejecutar-generator}
 
 \subsection{Configuración del proyecto desde eclipse}
 Las propiedades del archivo Torque.properties son como siguen para MySQL:
@@ -191,7 +187,7 @@ MS SQL admite poner el atributo {\em defaultIdMethod = “native”} para genera
 					\input{inc/configurar-schema.database.table.index.index-column}
 
 \section{Funcionamiento de las clases generadas}
-	\subsection{Usando el objeto}
+	\subsection{Usando las clases generadas}
 		\input{inc/use-torque.object}
 
 	\subsection{Insertando filas}
@@ -212,5 +208,16 @@ MS SQL admite poner el atributo {\em defaultIdMethod = “native”} para genera
 \section{Aplicacion}
 \subsection{Esquema base datos}
 \input{code/notas-schema}
+
+\begin{center}
+	\includegraphics[height=8cm]{img/app/1.jpg}
+	\includegraphics[height=6cm]{img/app/2.jpg}
+	\includegraphics[height=6cm]{img/app/3.jpg}
+	\includegraphics[height=6cm]{img/app/4.jpg}
+	\includegraphics[height=6cm]{img/app/5.jpg}
+	\includegraphics[height=6cm]{img/app/6.jpg}
+	\includegraphics[height=6cm]{img/app/7.jpg}
+	\includegraphics[height=6cm]{img/app/8.jpg}
+\end{center}
 
 \end{document}

@@ -1,0 +1,16 @@
+Acceder a la carpeta {\bf torque-gen-3.3} de nuestro proyecto, una vez allí:
+
+\begin{enumerate}
+	\item Descargar el driver {\bf JDBC} de la base de datos que desee utilizar, en nuestro caso {\em Postgresql}, desde la siguiente dirección: url{http://jdbc.postgresql.org/}
+	\item Introducir el driver {\bf JDBC} en el directorio {\bf lib} de Generator, que se encuentra dentro del directorio {\bf torque-gen-3.3}.
+
+	\item Crear usuaro, password y base de datos cuyo propietario sea el usuario creado. {\em En nuestro ejemplo, en PostgreSQL, hemos usado:}
+	\begin{itemize}
+		\item Crear usuario y password: {\em user1} y {\em user1}, respectivamente. 
+		\item Crear una base de datos, llamada {\em coches}, de la que es propietario {\em user1}.
+	\end{itemize}
+	
+	\item Crear un directorio {\bf en la raíz del proyecto} llamado {\em schema}, donde introducir el archivo xml. En este archivo se describirá la base de datos.
+	
+	\item Editar el archivo {\bf build.propierties} añadiendo la configuración de nuestro proyecto.
+\end{enumerate}

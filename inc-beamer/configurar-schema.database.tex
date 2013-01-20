@@ -1,0 +1,15 @@
+Puede contener los siguientes 8 atributos:
+
+\begin{description}
+	\item[name] el nombre de la base de datos.
+	\item[defaultIdMethod] este se aplica a aquellas tablas que no tienen un atributo id definido. Por defecto es “none”. Normalmente se utiliza si no quieres ID’s generados.
+	\item[defaultJavaType] tipo predeterminado de las columnas de la base de datos ( “object” o “primitive”, por defecto es primitive).
+	\item[package] paquete base donde se generará los modelos de objetos asociados con la base de datos. Este reemplaza la propiedad “targetPackage” del archivo build.properties de Torque.
+	\item[baseClass] la clase base que se utilizará al generar el modelo de objetos.
+	\item[basePeer] la clase peer a utilizar al generar los pares del modelo de objetos.
+	defaultJavaNamingMethod: este atributo determina como se convierten los nombres de las tablas y columnas en una clase Java o el nombre del método. Puede tener 3 valores diferentes:
+	\item[nochange] no se realizan cambios.
+	\item[underscore] se elimina el subrayado, la primera letra y después de un guión se pone la letra en mayúscula, el resto de caracteres en minúscula.
+	\item[javaname] con guiones bajos, pero las letras no se convierten en minúscula.
+	\item[heavyIndexing] agrega indices adicionales para columnas con varias claves primarias.
+\end{description}

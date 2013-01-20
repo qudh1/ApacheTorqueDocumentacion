@@ -1,0 +1,18 @@
+Creamos un objeto de la tabla.
+
+\begin{lstlisting}[language=Java]
+Author stevens = new Author();
+\end{lstlisting}
+
+Se rellenan los campos.
+
+\begin{lstlisting}[language=Java]
+stevens.setFirstName("W.");
+stevens.setLastName("Stevens");
+\end{lstlisting}
+
+Usamos la clase estática en este caso llamada “AuthorPeer”, para insertar el nuevo registro en la base de datos
+
+\begin{lstlisting}[language=Java]
+AuthorPeer.doInsert(stevens);
+\end{lstlisting}

@@ -1,0 +1,23 @@
+Puede haber 0 o más elementos de este tipo por tabla.
+
+\begin{lstlisting}[language=xml]
+<foreign-key foreignTable="MY_TABLE"
+	name="MY_TABLE_FK"
+	onUpdate="none"
+	onDelete="none">
+	
+	<!-- reference info -->
+	<reference
+	local="[columna_local]"
+	foreign="[columna_foreign]"/>
+</foreign-key>
+\end{lstlisting}
+
+Este elemento tiene 4 atributos:
+
+\begin{description}
+	\item[foreignTable] el nombre de la tabla donde se encuentra la clave foránea.
+	\item[name] el nombre de la clave foránea.
+	\item[onUpdate] acción a realizar cuando se actualiza el valor en foreignTable.
+	\item[onDelete] acción a realizar cuando se elimina el valor en foreingTable.
+\end{description}

@@ -1,0 +1,38 @@
+Los pasos para instalar {\bf Ant} son los siguientes:
+
+\begin{enumerate}
+	\item Descargar Ant
+	\item Descomprimir el fichero obtenido en un directorio. {\em Para nuestro ejemplo hemos elegido C:}
+	\item Renombrar la carpeta descomprimida {\bf apache-ant-1.8.4} como {\bf ant}, con el objetivo de hacer más sencillo el trabajo en linea de comandos.
+	\item Ejecutar la consola e introducir las siguientes variables de entorno:
+
+
+	\begin{itemize}
+		\item Para {\bf \small ANT\_ HOME}:
+		\begin{lstlisting}
+		set ANT_HOME= C:\ant
+		\end{lstlisting}
+
+		\item Y para {\bf \small JAVA\_ HOME} introducir la ruta de la máquina virtual de Java. {\em En nuestro caso el comando sería el siguiente:}
+		\begin{lstlisting}
+		set JAVA_HOME C:\Program Files\Java\jdk1.7.0_07
+		\end{lstlisting}
+
+		\item Introducir la dirección del directorio {\bf ant} en el PATH:
+		\begin{lstlisting}
+		set PATH=%PATH%;%ANT_HOME%\bin
+		\end{lstlisting}
+	\end{itemize}
+	
+	\item Obtener las dependencias de bibliotecas de Ant:
+	
+	\begin{itemize}
+		\item Desde cmd.exe nos dirigimos al directorio de Ant
+		\item Ejecutar:  
+		\begin{lstlisting}
+		ant -f fetch.xml -Ddest=system
+		\end{lstlisting}
+	\end{itemize}
+\end{enumerate}
+
+Instalación de {\bf Ant} finalizada, ya podemos usar {\bf Ant} desde consola.

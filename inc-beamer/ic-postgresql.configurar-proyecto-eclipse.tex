@@ -1,0 +1,51 @@
+Como podemos observar existen numerosos errores en nuestro proyecto, ello es debido a la falta de las librerías de Torque y Village. Las añadimos desde las siguientes direcciones:
+
+\begin{lstlisting}
+coches\torque-3.3\lib
+\end{lstlisting}
+
+\begin{center}
+	\includegraphics[height=6cm]{img/torque-lib.png}
+\end{center}
+
+\begin{lstlisting}
+coches\torque-3.3\
+\end{lstlisting}
+
+\begin{center}
+	\includegraphics{img/torque-file.png}
+\end{center}
+
+Ahora ya no existen errores en el proyecto y podemos realizar una pequeña prueba de ejecución, para ello podemos crear un paquete, donde crearemos una clase Main e introduciremos el siguiente código:
+
+\input{code/java-test}
+
+Desde nuestro main debemos de inicializar Torque, para ello hemos insertado la línea de código: 
+
+\begin{lstlisting}[language=java]
+Torque.init("Torque.properties")
+\end{lstlisting}
+
+{\bf Toque.init} toma como parámetro un fichero llamado {\bf Torque.properties}, situado en la carpeta {\bf torque-3.3}. Movemos ese archivo a la raíz del proyecto (para que sea accesible directamente), y procedemos a configurarlo. En amarillo se encuentran las líneas que han sido modificadas con respecto al archivo de configuración por defecto.
+
+	\input{code/torque.properties}
+	
+	Como último paso añadimos el driver de la base de datos a nuestro proyecto en Eclipse, situado en:
+	
+\begin{lstlisting}
+coches\torque-gen-3.3\lib
+\end{lstlisting}
+
+\begin{center}
+	\includegraphics{img/postgresql-file.png}
+\end{center}
+
+Ya finalmente podemos ejecutar el proyecto, la salida por pantalla sería la siguiente: 
+	
+\begin{lstlisting}
+coche_id: 3
+nombre:  mondeo
+
+coche_id: 4
+nombre:  jumpy
+\end{lstlisting}

@@ -1,0 +1,11 @@
+Torque genera cuatro clases por cada tabla. Por ejemplo en la aplicación coche nos aparecen las siguientes clases:
+
+\begin{description}
+	\item[BaseCoche.java] Es donde Torque genera toda la lógica necesaria para la clase coche.
+
+	\item[Coche.java] Esta clase extiende de BaseCoche.java, Torque nos proporciona esta clase vacía, para que en el caso de que necesitemos añadir nuevos métodos a Coche, lo hagamos en ella.
+
+	\item[BaseCochePeer.java] En esta clase Torque nos proporciona métodos estáticos para el uso de la base de datos.
+
+	\item[CochePeer.java] Al igual que en Coche.java esta clase extiende de BaseCochePeer.java y Torque nos la genera vacía para que añadamos nuestros propios métodos estáticos.
+\end{description}

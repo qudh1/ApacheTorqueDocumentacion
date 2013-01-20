@@ -1,0 +1,32 @@
+Puede haber 1 o más elementos de este tipo por tabla.
+
+\begin{lstlisting}[language=xml]
+<column
+	name="MY_COLUMN"
+	javaName="Column"
+	primaryKey="true"
+	required="true"
+	size="4"
+	type="VARCHAR"
+	javaNamingMethod="underscore">
+
+	<!-- inheritance info if necessary -->
+</column>
+\end{lstlisting}
+
+Contiene los siguientes atributos:
+
+\begin{description}
+	\item[name] nombre de la columna que está siendo referenciada.
+	\item[javaName] como se llamará esta columna en Java.
+	\item[primaryKey] valor booleano que indica si es la clave primaria o no. (true o false)
+	\item[required] indica si el valor es requerido.(true o false, por defecto es false)
+	\item[type] de que tipo es la columna.
+	\item[javaType] el tipo de la columna en Java.
+	\item[size] cuantos carácteres o digitos van a ser almacenados.
+	\item[default] valor por defecto si al insertar está vacio.
+	\item[autoIncrement] si este campo tiene autoincremento no. (true o false, por defecto es false)
+	\item[inheritance] Indica si tiene herencia. Puede tomar los valores “single” o “false”.
+	\item[javaNamingMethod] especifica el nombre que será utilizado en la clase Java del correspondiente objeto OM. Este atributo reemplaza al atributo “defaultJavaNamingMehtod” del elemento de la base de datos (database).
+	\item[description] se utiliza para la generación de documentación.
+\end{description}
